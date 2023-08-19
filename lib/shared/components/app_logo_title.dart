@@ -19,7 +19,7 @@ class AppLogoTitle extends StatelessWidget {
       children: [
         Icon(
           Icons.currency_exchange,
-          color: AppColors.logo,
+          color: AppColors.secondary,
           size: iconSize ?? 100,
         ),
         Padding(
@@ -30,7 +30,7 @@ class AppLogoTitle extends StatelessWidget {
             child: Text(
               title,
               style: TextStyle(
-                  color: AppColors.logo,
+                  color: AppColors.secondary,
                   fontSize: titleSize ?? 20,
                   fontWeight: FontWeight.bold),
             ))

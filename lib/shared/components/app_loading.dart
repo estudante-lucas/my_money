@@ -7,10 +7,10 @@ class AppLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: AppColors.appPageBackground,
+      backgroundColor: AppColors.background,
       body: Center(
         child: CircularProgressIndicator(
-          backgroundColor: AppColors.appPageBackground,
+          backgroundColor: AppColors.background,
           valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
         ),
       ),
