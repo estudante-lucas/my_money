@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_money/shared/colors/app_colors.dart';
 
 class AppButton extends StatelessWidget {
   final VoidCallback action;
@@ -37,17 +38,16 @@ class AppButton extends StatelessWidget {
         child: TextButton(
           onPressed: action,
           style: TextButton.styleFrom(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.green,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+            backgroundColor: AppColors.secondary,
+            foregroundColor: AppColors.secondary,
             padding: const EdgeInsets.all(12),
-            surfaceTintColor: Colors.green,
+            surfaceTintColor: AppColors.secondary,
           ),
           child: Text(label,
               textAlign: TextAlign.center,
               overflow: TextOverflow.clip,
-              style: const TextStyle(color: Colors.white)),
+              style: const TextStyle(color: AppColors.background)),
         ),
       ),
     );
