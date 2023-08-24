@@ -15,12 +15,8 @@ class _RegistrarPageState extends State<RegistrarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.secondary,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back),
-        ),
       ),
       backgroundColor: AppColors.background,
       body: SingleChildScrollView(
@@ -35,7 +31,7 @@ class _RegistrarPageState extends State<RegistrarPage> {
                   const AppLogoTitle(
                     title: 'Cadastro My Money',
                     titleSize: 20,
-                    iconSize: 20,
+                    iconSize: 50,
                   ),
                   TextFormField(
                     autofocus: false,
