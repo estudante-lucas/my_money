@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_money/registrar/page/registrar_page.dart';
 import 'package:my_money/shared/colors/app_colors.dart';
 import 'package:my_money/shared/components/app_logo_title.dart';
 import 'package:my_money/shared/components/app_loading.dart';
@@ -38,8 +39,7 @@ class _LoginPageState extends State<LoginPage> {
               child: SafeArea(
                 child: Center(
                   child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 140, left: 25, right: 25),
+                    padding: const EdgeInsets.only(top: 140, left: 25, right: 25),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,8 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                           textAlign: TextAlign.start,
                           autofocus: false,
                           keyboardType: TextInputType.text,
-                          decoration:
-                              const InputDecoration(label: Text("Login")),
+                          decoration: const InputDecoration(label: Text("Login")),
                         ),
                         TextFormField(
                           enabled: true,
@@ -64,8 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                           textAlign: TextAlign.start,
                           autofocus: false,
                           obscureText: true,
-                          decoration:
-                              const InputDecoration(label: Text("Senha")),
+                          decoration: const InputDecoration(label: Text("Senha")),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -77,8 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: ElevatedButton(
                               onPressed: () {},
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    AppColors.secondary),
+                                backgroundColor: MaterialStateProperty.all(AppColors.secondary),
                                 elevation: MaterialStateProperty.all(0),
                                 shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
@@ -89,12 +86,69 @@ class _LoginPageState extends State<LoginPage> {
                               child: const Text(
                                 "Login",
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
-                        )
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: 20,
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: () {},
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(AppColors.background),
+                                    elevation: MaterialStateProperty.all(0),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "Esqueci minha senha",
+                                    style: TextStyle(
+                                      color: AppColors.secondary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                      builder: (BuildContext context) => const RegistrarPage(),
+                                    ),
+                                  ),
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(AppColors.background),
+                                    elevation: MaterialStateProperty.all(0),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "Cadastrar-se",
+                                    style: TextStyle(
+                                      color: AppColors.secondary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
