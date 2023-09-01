@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:my_money/login/service/login_service.dart';
+import 'package:my_money/shared/helpers/validator.dart';
 part 'login_controller.g.dart';
 
 class LoginController = LoginControllerBase with _$LoginController;
 
 abstract class LoginControllerBase with Store {
+  LoginService service = LoginService();
+
   @observable
   bool isLoading = false;
 
@@ -36,11 +40,31 @@ abstract class LoginControllerBase with Store {
     required String email,
     required String password,
   }) {
-    return true;
+    return Validator.isEmail(email) && password.isNotEmpty;
   }
 
   @action
   Future<void> sendData() async {
-    isSuccess = true;
+    Map result = await service.sendData(
+      email: email,
+      password: password,
+    );
+
+    result.containsKey('success') ? isSuccess = true : getException(result['exception']);
+  }
+
+  @action
+  void getException(int code) {
+    switch (code) {
+      case 401:
+        SnackBarAction(label: "Acesso não autorizado!", onPressed: () {});
+        break;
+      case 400:
+        SnackBarAction(label: "Dados inválidos!", onPressed: () {});
+        break;
+      default:
+        SnackBarAction(label: "Erro inesperdo! Tente mais tarde.", onPressed: () {});
+        break;
+    }
   }
 }
