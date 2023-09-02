@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:my_money/shared/storage/app_key.dart';
+import 'package:my_money/shared/storage/app_secure_storage.dart';
 
 mixin AppDio {
   static Future<Dio> getConnection({bool isAuth = false}) async {
@@ -9,9 +11,8 @@ mixin AppDio {
 
     final Map<String, String> headers = {};
 
-    String token = "";
-
     if (isAuth) {
+      String? token = await AppSecureStorage.readItem(AppKey.authToken);
       headers["Authorization"] = "Bearer $token";
     }
 
