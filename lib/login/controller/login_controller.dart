@@ -33,6 +33,8 @@ abstract class LoginControllerBase with Store {
       isLoading = true;
       await sendData();
       isLoading = false;
+    } else {
+      SnackBarAction(label: "Verifique os dados preenchidos", onPressed: () {});
     }
   }
 
