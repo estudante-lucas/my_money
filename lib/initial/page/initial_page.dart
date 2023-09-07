@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:my_money/router/app_router.dart';
 import 'package:my_money/shared/colors/app_colors.dart';
@@ -25,7 +26,7 @@ class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
     redirect(context);
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: Center(
@@ -33,7 +34,7 @@ class _InitialPageState extends State<InitialPage> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: const [
               AppLogoTitle(title: 'My Money'),
             ],
           ),
