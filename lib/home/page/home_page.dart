@@ -1,91 +1,149 @@
-import 'package:my_money/home/controller/home_controller.dart';
-import 'package:my_money/shared/components/app_loading.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:my_money/home/components/expense_button.dart';
+import 'package:my_money/home/components/expense_count.dart';
+import 'package:my_money/router/app_router.dart';
+import 'package:my_money/shared/colors/app_colors.dart';
+import 'package:my_money/shared/components/app_button.dart';
+import 'package:my_money/shared/components/app_title.dart';
+import 'package:my_money/shared/components/expense_list.dart';
+import 'package:my_money/shared/metrics/app_metrics.dart';
+import 'package:my_money/shared/model/expense_model.dart';
+import 'package:my_money/shared/storage/app_key.dart';
+import 'package:my_money/shared/storage/app_secure_storage.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-  final String title;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late HomeController homeController;
+  onLogout() {
+    AppSecureStorage.deleteItem(AppKey.authToken);
+    AppSecureStorage.deleteItem(AppKey.userId);
+    AppSecureStorage.deleteItem(AppKey.user);
 
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    homeController = HomeController();
-
-    Future.delayed(const Duration(seconds: 3)).then(
-      (_) => setState(() {
-        isLoading = false;
-      }),
-    );
+    Navigator.of(context).pushReplacementNamed(AppRouter.login);
   }
+
+  List<ExpenseModel> expenses = [
+    ExpenseModel(
+      category: "Alimentação",
+      description: "Supermercado",
+      value: 100.0,
+      registrationDate: "01/09/2023",
+    ),
+    ExpenseModel(
+      category: "Transporte",
+      description: "Uber",
+      value: 27.0,
+      registrationDate: "01/09/2023",
+    ),
+    ExpenseModel(
+      category: "Alimentação",
+      description: "Padaria",
+      value: 20.0,
+      registrationDate: "02/09/2023",
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const AppLoading()
-        : Scaffold(
-            appBar: AppBar(
-              title: Text(widget.title),
-              centerTitle: true,
-              leading: const Icon(Icons.verified_user),
-              actions: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.logout))
-              ],
-            ),
-            body: Observer(builder: (_) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Image.network(
-                          "https://unisenaisc.com.br/wp-content/themes/portal-faculdades/img/logo.png"),
-                    ),
-                    const Text(
-                      'You have pushed the button this many times:',
-                    ),
-                    Text(
-                      '${homeController.counter}',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                  ],
-                ),
-              );
-            }),
-            floatingActionButton: Padding(
-              padding: const EdgeInsets.only(bottom: 40),
-              child: FloatingActionButton(
-                onPressed: homeController.incrementCounter,
-                tooltip: 'Increment',
-                child: const Icon(Icons.add),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        centerTitle: true,
+        toolbarHeight: AppMetrics.barHeight,
+        elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: onLogout,
+            icon: const Icon(Icons.logout),
+          )
+        ],
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed(AppRouter.personalRegister);
+          },
+          icon: const Icon(Icons.settings_outlined),
+        ),
+      ),
+      backgroundColor: AppColors.background,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 25,
+                right: 25,
               ),
-            ),
-            bottomSheet: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.rectangle, color: Colors.white),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: ElevatedButton(
-                  onPressed: homeController.reset,
-                  child: const Text(
-                    'Reiniciar contador',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const AppTitle(title: "Dashboard MyMoney"),
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ExpenseCount(
+                          title: "Gasto acumulado",
+                          value: 200.0,
+                          background: AppColors.error,
+                          icon: Icons.trending_up,
+                        ),
+                        ExpenseCount(
+                          title: "Gasto planejado",
+                          value: 2000.0,
+                          background: Colors.lightGreen,
+                          icon: Icons.trending_up,
+                        )
+                      ],
                     ),
                   ),
-                )),
-          );
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.38,
+                      decoration: const BoxDecoration(color: AppColors.secondary),
+                      child: const Center(
+                        child: Text(
+                          "Dados de gráficos de gastos",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: ExpenseList(
+                      expenses: expenses,
+                      title: "Gastos recentes",
+                    ),
+                  ),
+                  AppButton(
+                    action: () {},
+                    label: "Histórico",
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: Container(
+          height: 40,
+        ),
+      ),
+      floatingActionButton: ExpenseButton.add(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
   }
 }
