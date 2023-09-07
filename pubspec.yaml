@@ -21,6 +21,9 @@ version: 1.0.0+1
 environment:
   sdk: '>=2.19.6 <3.0.0'
 
+scripts:
+  gen: "dart run build_runner build --delete-conflicting-outputs"
+
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
