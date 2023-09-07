@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_money/home/components/expense_button.dart';
 import 'package:my_money/home/components/expense_count.dart';
+import 'package:my_money/home/components/management_indicator.dart';
 import 'package:my_money/home/controller/home_controller.dart';
 import 'package:my_money/shared/colors/app_colors.dart';
 import 'package:my_money/shared/components/app_button.dart';
@@ -80,17 +81,59 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.only(bottom: 10, top: 10),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.38,
-                        decoration: const BoxDecoration(color: AppColors.secondary),
+                        decoration: BoxDecoration(
+                          color: AppColors.background,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: const Center(
-                          child: Text(
-                            "Dados de gráficos de gastos",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    ManagementIndicator(
+                                      value: 1762,
+                                      subtitle: "Saldo gasto planejado",
+                                      minValueAxis: 0,
+                                      maxValueAxis: 2000,
+                                      isASC: false,
+                                    ),
+                                    ManagementIndicator(
+                                      value: 70,
+                                      subtitle: "Saldo despesa diária",
+                                      minValueAxis: 0,
+                                      maxValueAxis: 150,
+                                      isASC: false,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                child: Row(
+                                  children: [
+                                    ManagementIndicator(
+                                      value: 10,
+                                      subtitle: "Período decorrido",
+                                      minValueAxis: 1,
+                                      maxValueAxis: 30,
+                                      isMoney: false,
+                                    ),
+                                    ManagementIndicator(
+                                      value: 20,
+                                      subtitle: "Saldo despesa diária",
+                                      minValueAxis: 0,
+                                      maxValueAxis: 150,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
