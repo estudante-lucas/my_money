@@ -9,35 +9,35 @@ part of 'login_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$LoginController on LoginControllerBase, Store {
-  late final _$isLoadingAtom =
-      Atom(name: 'LoginControllerBase.isLoading', context: context);
+  late final _$_isLoadingAtom =
+      Atom(name: 'LoginControllerBase._isLoading', context: context);
 
   @override
-  bool get isLoading {
-    _$isLoadingAtom.reportRead();
-    return super.isLoading;
+  bool get _isLoading {
+    _$_isLoadingAtom.reportRead();
+    return super._isLoading;
   }
 
   @override
-  set isLoading(bool value) {
-    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
-      super.isLoading = value;
+  set _isLoading(bool value) {
+    _$_isLoadingAtom.reportWrite(value, super._isLoading, () {
+      super._isLoading = value;
     });
   }
 
-  late final _$isSuccessAtom =
-      Atom(name: 'LoginControllerBase.isSuccess', context: context);
+  late final _$_isSuccessAtom =
+      Atom(name: 'LoginControllerBase._isSuccess', context: context);
 
   @override
-  bool get isSuccess {
-    _$isSuccessAtom.reportRead();
-    return super.isSuccess;
+  bool get _isSuccess {
+    _$_isSuccessAtom.reportRead();
+    return super._isSuccess;
   }
 
   @override
-  set isSuccess(bool value) {
-    _$isSuccessAtom.reportWrite(value, super.isSuccess, () {
-      super.isSuccess = value;
+  set _isSuccess(bool value) {
+    _$_isSuccessAtom.reportWrite(value, super._isSuccess, () {
+      super._isSuccess = value;
     });
   }
 
@@ -65,6 +65,28 @@ mixin _$LoginController on LoginControllerBase, Store {
       ActionController(name: 'LoginControllerBase', context: context);
 
   @override
+  void toggleSuccess() {
+    final _$actionInfo = _$LoginControllerBaseActionController.startAction(
+        name: 'LoginControllerBase.toggleSuccess');
+    try {
+      return super.toggleSuccess();
+    } finally {
+      _$LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void toggleLoading() {
+    final _$actionInfo = _$LoginControllerBaseActionController.startAction(
+        name: 'LoginControllerBase.toggleLoading');
+    try {
+      return super.toggleLoading();
+    } finally {
+      _$LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void getException(int code) {
     final _$actionInfo = _$LoginControllerBaseActionController.startAction(
         name: 'LoginControllerBase.getException');
@@ -78,8 +100,7 @@ mixin _$LoginController on LoginControllerBase, Store {
   @override
   String toString() {
     return '''
-isLoading: ${isLoading},
-isSuccess: ${isSuccess}
+
     ''';
   }
 }

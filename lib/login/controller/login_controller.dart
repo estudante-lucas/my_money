@@ -12,10 +12,13 @@ abstract class LoginControllerBase with Store {
   LoginService service = LoginService();
 
   @observable
-  bool isLoading = false;
+  bool _isLoading = false;
 
   @observable
-  bool isSuccess = false;
+  bool _isSuccess = false;
+
+  bool get isLoading => _isLoading;
+  bool get isSuccess => _isSuccess;
 
   late String email;
   late String password;
@@ -32,9 +35,8 @@ abstract class LoginControllerBase with Store {
     if (_validate(email: email, password: password)) {
       this.email = email;
       this.password = password;
-      isLoading = true;
+      toggleLoading();
       await sendData();
-      isLoading = false;
     } else {
       AppSnackbar.openMessage(
         context: buildContext,
@@ -57,11 +59,18 @@ abstract class LoginControllerBase with Store {
       password: password,
     );
 
-    result.containsKey('success') ? isSuccess = true : getException(result['exception']);
+    result.containsKey('success') ? toggleSuccess() : getException(result['exception']);
   }
 
   @action
+  void toggleSuccess() => _isSuccess = !_isSuccess;
+
+  @action
+  void toggleLoading() => _isLoading = !_isLoading;
+
+  @action
   void getException(int code) {
+    toggleLoading();
     switch (code) {
       case 401:
         AppSnackbar.openMessage(
