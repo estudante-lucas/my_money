@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
+import 'package:my_money/home/service/home_service.dart';
 import 'package:my_money/router/app_router.dart';
+import 'package:my_money/shared/helpers/date_helper.dart';
 import 'package:my_money/shared/model/expense_model.dart';
 import 'package:my_money/shared/storage/app_key.dart';
 import 'package:my_money/shared/storage/app_secure_storage.dart';
@@ -10,38 +12,89 @@ part 'home_controller.g.dart';
 class HomeController = HomeControllerBase with _$HomeController;
 
 abstract class HomeControllerBase with Store {
-  @observable
-  late List<ExpenseModel> _expenses;
+  HomeService service = HomeService();
+
+  List<ExpenseModel> expenseList = [];
 
   @observable
-  late double _accValue;
+  bool isLoading = true;
 
   @observable
-  late double _goalValue;
+  List<ExpenseModel> expenses = [];
 
-  List<ExpenseModel> get expenses => _expenses;
+  @observable
+  double accValue = 0;
 
-  double get accValue => _accValue;
+  @observable
+  double goalValue = 0;
 
-  double get goalValue => _goalValue;
+  @observable
+  double dailyExpenseBalance = 0;
+
+  @observable
+  double plannedSpentBalance = 0;
+
+  @observable
+  double expensesDay = 0;
+
+  @observable
+  int dayOfMonth = 1;
 
   @action
   Future<void> loadData() async {
-    _expenses = await _getExpenses();
-    _accValue = await _getAccValue();
-    _goalValue = await _getGoalValue();
+    expenses = await _getExpenses();
+    accValue = await _getAccValue();
+    goalValue = await _getGoalValue();
+    dailyExpenseBalance = await _getDailyExpenseBalance();
+    plannedSpentBalance = await _getPlannedSpentBalance();
+    expensesDay = await _getExpensesDay();
+    dayOfMonth = await _getDayOfMonth();
+    isLoading = false;
   }
 
   Future<List<ExpenseModel>> _getExpenses() async {
-    return <ExpenseModel>[];
+    expenseList = await service.getExpenses();
+
+    return expenseList.getRange(0, 3).toList();
   }
 
   Future<double> _getAccValue() async {
-    return 0.0;
+    double totalValue = 0.0;
+
+    for (var expense in expenseList) {
+      totalValue += expense.value;
+    }
+
+    return totalValue;
   }
 
   Future<double> _getGoalValue() async {
-    return 0.0;
+    return await service.getGoalValue();
+  }
+
+  Future<double> _getDailyExpenseBalance() async {
+    int daysOfMonth = 30;
+    double spentBalance = goalValue - accValue;
+    return (spentBalance / daysOfMonth).toDouble().floorToDouble();
+  }
+
+  Future<double> _getPlannedSpentBalance() async {
+    return goalValue - accValue;
+  }
+
+  Future<double> _getExpensesDay() async {
+    double totalValue = 0;
+    String actualDay = DateHelper.getFormatDMY(DateTime.now());
+
+    for (var expense in expenseList) {
+      if (expense.registrationDate == actualDay) totalValue += expense.value;
+    }
+
+    return totalValue;
+  }
+
+  Future<int> _getDayOfMonth() async {
+    return int.parse(DateHelper.getDayOfMonth());
   }
 
   void logout(BuildContext context) {
@@ -49,10 +102,14 @@ abstract class HomeControllerBase with Store {
     AppSecureStorage.deleteItem(AppKey.userId);
     AppSecureStorage.deleteItem(AppKey.user);
 
-    Navigator.of(context).pushReplacementNamed(AppRouter.login);
+    Navigator.of(context).pushReplacementNamed(
+      AppRouter.login,
+    );
   }
 
   void goSettings(BuildContext context) {
-    Navigator.of(context).pushNamed(AppRouter.personalRegister);
+    Navigator.of(context).pushNamed(
+      AppRouter.personalRegister,
+    );
   }
 }
