@@ -88,14 +88,14 @@ class _HomePageState extends State<HomePage> {
                           color: AppColors.background,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Column(
                             children: [
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical: 20),
+                                padding: const EdgeInsets.symmetric(vertical: 20),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
+                                  children: const [
                                     ManagementIndicator(
                                       value: 1762,
                                       subtitle: "Saldo gasto planejado",
@@ -114,9 +114,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical: 20),
+                                padding: const EdgeInsets.symmetric(vertical: 20),
                                 child: Row(
-                                  children: [
+                                  children: const [
                                     ManagementIndicator(
                                       value: 10,
                                       subtitle: "Período decorrido",
