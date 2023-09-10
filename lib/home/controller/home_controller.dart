@@ -55,6 +55,8 @@ abstract class HomeControllerBase with Store {
   Future<List<ExpenseModel>> _getExpenses() async {
     expenseList = await service.getExpenses();
 
+    if (expenseList.length < 3) return expenseList;
+
     return expenseList.getRange(0, 3).toList();
   }
 
