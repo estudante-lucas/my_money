@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:my_money/http/app_dio.dart';
 import 'package:my_money/register/model/register_model.dart';
+import 'package:my_money/shared/helpers/constants.dart';
 
 class RegisterRepository {
-  String baseURL = "http://192.168.31.96:3099/user";
+  String baseURL = "http://${Constants.hostname}:3099/user";
 
   Future<Response<Map<String, dynamic>>> sendRegisterData(RegisterDataModel registerData) async {
     final Dio clientHTTP = await AppDio.getConnection();

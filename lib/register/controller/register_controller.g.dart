@@ -9,7 +9,8 @@ part of 'register_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$RegisterController on RegisterControllerBase, Store {
-  late final _$isLoadingAtom = Atom(name: '_RegisterController.isLoading', context: context);
+  late final _$isLoadingAtom =
+      Atom(name: 'RegisterControllerBase.isLoading', context: context);
 
   @override
   bool get isLoading {
@@ -24,7 +25,8 @@ mixin _$RegisterController on RegisterControllerBase, Store {
     });
   }
 
-  late final _$isSuccessAtom = Atom(name: '_RegisterController.isSuccess', context: context);
+  late final _$isSuccessAtom =
+      Atom(name: 'RegisterControllerBase.isSuccess', context: context);
 
   @override
   bool get isSuccess {
@@ -39,7 +41,8 @@ mixin _$RegisterController on RegisterControllerBase, Store {
     });
   }
 
-  late final _$checkDataAsyncAction = AsyncAction('_RegisterController.checkData', context: context);
+  late final _$checkDataAsyncAction =
+      AsyncAction('RegisterControllerBase.checkData', context: context);
 
   @override
   Future<void> checkData(
@@ -56,14 +59,16 @@ mixin _$RegisterController on RegisterControllerBase, Store {
         buildContext: buildContext));
   }
 
-  late final _$senDataAsyncAction = AsyncAction('_RegisterController.senData', context: context);
+  late final _$senDataAsyncAction =
+      AsyncAction('RegisterControllerBase.senData', context: context);
 
   @override
   Future<void> senData() {
     return _$senDataAsyncAction.run(() => super.senData());
   }
 
-  late final _$validateAsyncAction = AsyncAction('_RegisterController.validate', context: context);
+  late final _$validateAsyncAction =
+      AsyncAction('RegisterControllerBase.validate', context: context);
 
   @override
   Future<void> validate() {

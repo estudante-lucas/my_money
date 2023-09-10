@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+import 'package:my_money/register/controller/register_controller.dart';
 import 'package:my_money/shared/colors/app_colors.dart';
 import 'package:my_money/shared/components/app_button.dart';
 import 'package:my_money/shared/components/app_logo_title.dart';
@@ -11,6 +13,45 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  RegisterController controller = RegisterController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordCheckController = TextEditingController();
+  late ReactionDisposer sendDataReactionDisposer;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    reactsToSendDataSuccess();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    passwordCheckController.dispose();
+    sendDataReactionDisposer();
+    super.dispose();
+  }
+
+  void reactsToSendDataSuccess() {
+    sendDataReactionDisposer = reaction((_) => controller.isSuccess, (bool success) {
+      if (success) Navigator.of(context).pop();
+    });
+  }
+
+  void onRegister() async {
+    await controller.checkData(
+      buildContext: context,
+      nameController: nameController.text,
+      emailController: emailController.text,
+      passwordController: passwordController.text,
+      passwordCheckController: passwordCheckController.text,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextFormField(
                     autofocus: false,
+                    controller: nameController,
                     enabled: true,
                     keyboardType: TextInputType.text,
                     textAlign: TextAlign.start,
@@ -44,6 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextFormField(
                     autofocus: false,
+                    controller: emailController,
                     enabled: true,
                     keyboardType: TextInputType.text,
                     textAlign: TextAlign.start,
@@ -53,6 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextFormField(
                     autofocus: false,
+                    controller: passwordController,
                     enabled: true,
                     keyboardType: TextInputType.text,
                     obscureText: true,
@@ -63,6 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextFormField(
                     autofocus: false,
+                    controller: passwordCheckController,
                     enabled: true,
                     keyboardType: TextInputType.text,
                     obscureText: true,
@@ -74,7 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: AppButton(
-                      action: () {},
+                      action: onRegister,
                       label: "Cadastrar",
                     ),
                   )
