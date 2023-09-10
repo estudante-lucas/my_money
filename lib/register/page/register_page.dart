@@ -3,14 +3,14 @@ import 'package:my_money/shared/colors/app_colors.dart';
 import 'package:my_money/shared/components/app_button.dart';
 import 'package:my_money/shared/components/app_logo_title.dart';
 
-class RegistrarPage extends StatefulWidget {
-  const RegistrarPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<RegistrarPage> createState() => _RegistrarPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegistrarPageState extends State<RegistrarPage> {
+class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

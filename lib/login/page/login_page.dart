@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_money/login/controller/login_controller.dart';
-import 'package:my_money/registrar/page/registrar_page.dart';
+import 'package:my_money/register/page/register_page.dart';
 import 'package:my_money/shared/colors/app_colors.dart';
 import 'package:my_money/shared/components/app_loading.dart';
 import 'package:my_money/shared/components/app_logo_title.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                                     onPressed: () => Navigator.push(
                                       context,
                                       MaterialPageRoute<void>(
-                                        builder: (BuildContext context) => const RegistrarPage(),
+                                        builder: (BuildContext context) => const RegisterPage(),
                                       ),
                                     ),
                                     style: ButtonStyle(

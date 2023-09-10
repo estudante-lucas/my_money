@@ -4,7 +4,7 @@ import 'package:my_money/home/page/home_page.dart';
 import 'package:my_money/initial/page/initial_page.dart';
 import 'package:my_money/login/page/login_page.dart';
 import 'package:my_money/personal_register/page/personal_register_page.dart';
-import 'package:my_money/registrar/page/registrar_page.dart';
+import 'package:my_money/register/page/register_page.dart';
 import 'package:my_money/router/app_router.dart';
 
 void main() {
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         AppRouter.login: (context) => const LoginPage(),
         AppRouter.home: (context) => const HomePage(),
         AppRouter.history: (context) => const HistoryPage(),
-        AppRouter.register: (context) => const RegistrarPage(),
+        AppRouter.register: (context) => const RegisterPage(),
         AppRouter.personalRegister: (context) => const PersonalRegisterPage(),
       },
     );
